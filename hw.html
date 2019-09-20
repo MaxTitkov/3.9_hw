@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<textarea name="city" id="city" cols="30" rows="1" placeholder="Введите ваш город..."></textarea>
+<p id="textCity"></p>
+<button id="clearCookie">Очистить</button>
+
+<script>
+
+	function getCookie(name) {
+		let matches = document.cookie.match(new RegExp(
+		"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+		));
+		return matches ? decodeURIComponent(matches[1]) : undefined;
+	}
+
+	function deleteCookie(cname) {
+	    var d = new Date();
+	    d.setTime(d.getTime() - (1000*60*60*24));
+	    var expires = "expires=" + d.toGMTString();
+	    window.document.cookie = cname+"="+"; "+expires;
+ 
+}
+	
+	let textArea = document.querySelector("#city");
+	let btn = document.querySelector("#clearCookie");
+
+	textArea.oninput = () => {
+		document.cookie = encodeURIComponent("city") + "=" + encodeURIComponent(textArea.value);
+	}
+
+	if (document.cookie){
+		document.querySelector("textarea").style.display = "none";
+		document.querySelector("#textCity").textContent = "Ваш город " + getCookie("city");
+	}
+
+	btn.onclick = () => {
+		deleteCookie("city");
+		document.location.reload(true);
+	}
+
+</script>

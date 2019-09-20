@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<input type="checkbox" name="callme" id="callme" value="call">
+<label for="callme">Позвоните мне</label><br>
+
+<input type="checkbox" name="confirmation" id="confirmation" value="confirm">
+<label for="confirmation">Я прочитал и согласен с правилами пользования сервисом</label><br>
+
+<input type="checkbox" name="dont" id="dont" value="dont">
+<label for="callme">Я не выбираю эту галочку</label><br>
+
+<input type="checkbox" name="freedom" id="freedom" value="freedom">
+<label for="freedom">Я подтверждаю, что свобода в интернете это возможность выбирать галочки и не только она</label><br>
+
+<input type="checkbox" name="older" id="older" value="older">
+<label for="older">Мне больше 12 лет</label><br>
+
+<input type="checkbox" name="right" id="right" value="right">
+<label for="right">Это задание выполнено правильно</label><br>
+
+<button id="save">Сохранить</button>
+
+<script>
+
+	let btn = document.querySelector("#save");
+	var checkboxes = document.getElementsByTagName("input");
+	
+	function getCookie(name) {
+
+		let matches = document.cookie.match(new RegExp(
+		"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+			));
+		return matches ? decodeURIComponent(matches[1]) : undefined;
+		}
+
+	function deleteCookie(cname) {
+		var d = new Date();
+		d.setTime(d.getTime() - (1000*60*60*24));
+		var expires = "expires=" + d.toGMTString();
+		window.document.cookie = cname+"="+"; "+expires;
+	}
+
+	btn.onclick = () => {
+		for (var i=0; i < checkboxes.length; i++){
+			if (checkboxes[i].type === "checkbox"){
+				document.cookie = encodeURIComponent(checkboxes[i].name) + "=" + encodeURIComponent(checkboxes[i].value);
+				document.cookie = encodeURIComponent("disabled") + "=" + encodeURIComponent("true");
+				document.cookie = encodeURIComponent("max-age") + "=" + encodeURIComponent("3600");
+				document.cookie = "path=/";
+				checkboxes[i].setAttribute("disabled", getCookie("checked"));
+			}
+		}
+	}
+
+	for(var i=0; i < checkboxes.length; i++){
+		if(document.cookie){
+			checkboxes[i].setAttribute("disabled", getCookie("checked"));
+		}
+		
+	}
+
+
+
+
+</script>
