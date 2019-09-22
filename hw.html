@@ -28,7 +28,7 @@
 		document.cookie = encodeURIComponent("city") + "=" + encodeURIComponent(textArea.value);
 	}
 
-	if (document.cookie){
+	if (document.cookie.split()[0].includes("city")){
 		document.querySelector("textarea").style.display = "none";
 		document.querySelector("#textCity").textContent = "Ваш город " + getCookie("city");
 	}

@@ -46,7 +46,6 @@
 				document.cookie = encodeURIComponent(checkboxes[i].name) + "=" + encodeURIComponent(checkboxes[i].value);
 				document.cookie = encodeURIComponent("disabled") + "=" + encodeURIComponent("true");
 				document.cookie = encodeURIComponent("max-age") + "=" + encodeURIComponent("3600");
-				document.cookie = "path=/";
 				checkboxes[i].setAttribute("disabled", getCookie("checked"));
 			}
 		}
