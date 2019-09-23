@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<input type="checkbox" name="callme" id="callme" value="call">
+<label for="callme">Позвоните мне</label><br>
+
+<input type="checkbox" name="confirmation" id="confirmation" value="confirm">
+<label for="confirmation">Я прочитал и согласен с правилами пользования сервисом</label><br>
+
+<input type="checkbox" name="dont" id="dont" value="dont">
+<label for="dont">Я не выбираю эту галочку</label><br>
+
+<input type="checkbox" name="freedom" id="freedom" value="freedom">
+<label for="freedom">Я подтверждаю, что свобода в интернете это возможность выбирать галочки и не только она</label><br>
+
+<input type="checkbox" name="older" id="older" value="older">
+<label for="older">Мне больше 12 лет</label><br>
+
+<input type="checkbox" name="right" id="right" value="right">
+<label for="right">Это задание выполнено правильно</label><br>
+
+<button id="save">Сохранить</button>
+<button id="reset">Очистить куки</button>
+
+<script>
+	let checkBoxes = document.querySelectorAll("input[type='checkbox']");
+	let saveButton = document.querySelector("#save");
+	let resetButton = document.querySelector("#reset");
+
+	if(getCookie("disabled")){
+		for(let i=0; i<checkBoxes.length; i++){
+			checkBoxes[i].disabled = true;
+		}
+	}
+	
+	 function getCookie(name) {
+		let matches = document.cookie.match(new RegExp(
+		"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+		));
+		return matches ? decodeURIComponent(matches[1]) : undefined;
+		};
+
+	function setCookie(name, value, options = {}) {
+
+		options = {
+		path: '/',
+		};
+
+		let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+		for (let optionKey in options) {
+			updatedCookie += "; " + optionKey;
+			let optionValue = options[optionKey];
+			if (optionValue !== true) {
+				updatedCookie += "=" + optionValue;
+				}
+			}
+		document.cookie = updatedCookie;
+
+		};
+
+	function deleteCookie(name) {
+		setCookie(name, "", {
+			'max-age': -1
+			})
+		};
+
+	saveButton.onclick = () => {
+		setCookie("disabled", "true");
+		for(let i=0; i < checkBoxes.length; i++){
+			setCookie(checkBoxes[i].name, checkBoxes[i].value);
+			checkBoxes[i].disabled = true;
+		}
+	}
+	resetButton.onclick = () => {
+		deleteCookie("disabled")
+		for(let i=0; i < checkBoxes.length; i++){
+			deleteCookie(checkBoxes[i].name);
+			checkBoxes[i].disabled = false;
+		}
+	}
+
+</script>
